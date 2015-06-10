@@ -31,6 +31,12 @@ abstract class AbstractTeleporter implements TeleporterInterface
     {
         $target = $this->getTarget($context, $resource);
 
+        $targetDir = dirname($target);
+
+        if (!is_dir($targetDir)) {
+            mkdir($targetDir, 0777, true);
+        }
+
         if (false === file_put_contents($target, $data)) {
             throw new IOException(sprintf('Could not write to %s', $target));
         }
